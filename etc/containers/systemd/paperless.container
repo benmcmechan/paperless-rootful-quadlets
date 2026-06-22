@@ -1,26 +1,20 @@
 [Unit]
 Description=Paperless-ngx container
-Wants=network-online.target valkey.service
-After=network-online.target valkey.service
+Wants=paperless-pod.service valkey.service
+After=paperless-pod.service valkey.service
 
 [Container]
 ContainerName=paperless
-DropCapability=all
-NoNewPrivileges=true
 Image=ghcr.io/paperless-ngx/paperless-ngx:latest
-User=1000
-Group=1000
-ReadOnly=true
 Tmpfs=/tmp:rw,mode=1777
-Volume=/var/srv/paperless/data:/usr/src/paperless/data:rw,z
-Volume=/var/srv/paperless/media:/usr/src/paperless/media:rw,z
-Volume=/var/srv/paperless/export:/usr/src/paperless/export:rw,z
-Volume=/var/srv/paperless/consume:/usr/src/paperless/consume:rw,z
+Volume=/mnt/paperless/data:/usr/src/paperless/data:rw,z
+Volume=/mnt/paperless/media:/usr/src/paperless/media:rw,z
+Volume=/mnt/paperless/export:/usr/src/paperless/export:rw,z
+Volume=/mnt/paperless/consume:/usr/src/paperless/consume:rw,z
 AutoUpdate=registry
-Network=paperless.network
-IP=10.89.1.30
-EnvironmentFile=/var/srv/paperless/env
-Environment=PAPERLESS_REDIS=redis://10.89.1.20:6379
+Pod=paperless.pod
+EnvironmentFile=/srv/paperless/paperless.env
+Environment=PAPERLESS_REDIS=redis:6379
 Environment=PAPERLESS_SUPERVISORD_WORKING_DIR=/tmp
 
 [Service]

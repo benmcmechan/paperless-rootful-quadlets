@@ -1,6 +1,6 @@
-[Network]
-DisableDNS=false
-Internal=false
+[Pod]
+PodName=paperless
+
 
 # Manual subnet IP
 Subnet=10.89.1.0/24
