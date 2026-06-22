@@ -5,7 +5,7 @@ After=paperless-pod.service valkey.service
 
 [Container]
 ContainerName=paperless
-Image=ghcr.io/paperless-ngx/paperless-ngx:latest
+ZImage=ghcr.io/paperless-ngx/paperless-ngx:latest
 Tmpfs=/tmp:rw,mode=1777
 Volume=/mnt/paperless/data:/usr/src/paperless/data:rw,z
 Volume=/mnt/paperless/media:/usr/src/paperless/media:rw,z

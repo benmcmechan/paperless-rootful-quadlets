@@ -4,7 +4,7 @@ Wants=paperless-pod.service
 After=paperless-pod.service
 
 [Container]
-ContainerName=paperless-valkey
+ContainerName=paperlessw-valkey
 Image=docker.io/valkey/valkey:8-alpine
 Volume=/mnt/paperless/valkey:/data:rw,z
 AutoUpdate=registry
