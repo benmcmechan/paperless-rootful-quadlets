@@ -1,0 +1,4 @@
+[Pod]
+PodName=paperless
+PublishPort=8100:8000
+

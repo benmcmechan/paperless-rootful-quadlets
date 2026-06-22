@@ -1,16 +1,18 @@
 [Unit]
-Description=Valkey for Paperless-ngx
+Description=PostgreSQL for Paperless-ngx
 Wants=paperless-pod.service
 After=paperless-pod.service
+Before=paperless.service
 
 [Container]
-ContainerName=paperless-valkey
-Image=docker.io/valkey/valkey:8-alpine
-Volume=/mnt/paperless/valkey:/data:rw,z
-AutoUpdate=registry
+ContainerName=paperless-db
 Pod=paperless.pod
+AutoUpdate=registry
+Image=docker.io/library/postgres:17-alpine
 EnvironmentFile=/srv/paperless/paperless.env
+Volume=/srv/paperless/db:/var/lib/postgresql/data:z
 
+ 
 [Service]
 Restart=on-failure
 TimeoutStartSec=900

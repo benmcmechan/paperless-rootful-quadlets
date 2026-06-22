@@ -1,11 +1,11 @@
 [Unit]
 Description=Paperless-ngx container
-Wants=paperless-pod.service valkey.service
-After=paperless-pod.service valkey.service
+Wants=paperless-pod.service paperless-valkey.service
+After=paperless-pod.service paperless-valkey.service
 
 [Container]
 ContainerName=paperless
-ZImage=ghcr.io/paperless-ngx/paperless-ngx:latest
+Image=ghcr.io/paperless-ngx/paperless-ngx:latest
 Tmpfs=/tmp:rw,mode=1777
 Volume=/mnt/paperless/data:/usr/src/paperless/data:rw,z
 Volume=/mnt/paperless/media:/usr/src/paperless/media:rw,z
@@ -14,8 +14,6 @@ Volume=/mnt/paperless/consume:/usr/src/paperless/consume:rw,z
 AutoUpdate=registry
 Pod=paperless.pod
 EnvironmentFile=/srv/paperless/paperless.env
-Environment=PAPERLESS_REDIS=redis:6379
-Environment=PAPERLESS_SUPERVISORD_WORKING_DIR=/tmp
 
 [Service]
 Restart=on-failure
