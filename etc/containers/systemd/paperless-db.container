@@ -7,10 +7,15 @@ Before=paperless.service
 [Container]
 ContainerName=paperless-db
 Pod=paperless.pod
-AutoUpdate=registry
 Image=docker.io/library/postgres:17-alpine
 EnvironmentFile=/srv/paperless/paperless.env
 Volume=/srv/paperless/db:/var/lib/postgresql/data:z
+
+HealthCmd=pg_isready -U postgres || exit 1
+HealthInterval=15s
+HealthTimeout=5s
+HealthRetries=5
+HealthStartPeriod=30s
 
  
 [Service]

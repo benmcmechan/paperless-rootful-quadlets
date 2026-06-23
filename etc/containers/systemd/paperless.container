@@ -15,8 +15,15 @@ AutoUpdate=registry
 Pod=paperless.pod
 EnvironmentFile=/srv/paperless/paperless.env
 
+HealthCmd=["/bin/bash", "-c", "exec 5<>/dev/tcp/127.0.0.1/3003"]
+HealthStartPeriod=30s
+HealthInterval=10s
+HealthTimeout=5s
+HealthRetries=5
+Notify=healthy
+
 [Service]
-Restart=on-failure
+Restart=always
 TimeoutStartSec=900
 
 [Install]

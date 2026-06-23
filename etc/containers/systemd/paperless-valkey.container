@@ -11,6 +11,12 @@ AutoUpdate=registry
 Pod=paperless.pod
 EnvironmentFile=/srv/paperless/paperless.env
 
+HealthCmd=valkey-cli ping | grep -q PONG || exit 1
+HealthInterval=10s
+HealthTimeout=5s
+HealthRetries=3
+HealthStartPeriod=10s
+
 [Service]
 Restart=on-failure
 TimeoutStartSec=900
