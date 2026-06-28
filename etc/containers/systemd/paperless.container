@@ -13,7 +13,16 @@ Volume=/mnt/paperless/export:/usr/src/paperless/export:rw,z
 Volume=/mnt/paperless/consume:/usr/src/paperless/consume:rw,z
 AutoUpdate=registry
 Pod=paperless.pod
-EnvironmentFile=/srv/paperless/paperless.env
+Environment=PAPERLESS_URL=https://paperless.urbanelephant.uk
+Secret=paperless-secret-key,type=env,target=PAPERLESS_SECRET_KEY
+Environment=PAPERLESS_TIME_ZONE=Europe/London
+Environment=PAPERLESS_REDIS=redis://127.0.0.1:6379
+Environment=PAPERLESS_SUPERVISORD_WORKING_DIR=/tmp
+Environment=PAPERLESS_DBHOST=127.0.0.1:5432
+Environment=PAPERLESS_DBENGINE=postgresql
+Environment=PAPERLESS_DBNAME=paperless
+Environment=PAPERLESS_DBUSER=paperless
+Secret=paperless-db-password,type=env,target=PAPERLESS_DBPASS
 
 HealthCmd=["/bin/bash", "-c", "exec 5<>/dev/tcp/127.0.0.1/3003"]
 HealthStartPeriod=30s
@@ -23,8 +32,9 @@ HealthRetries=5
 Notify=healthy
 
 [Service]
-Restart=always
-TimeoutStartSec=900
+Restart=unless-stopped
+RestartSec=10
+
 
 [Install]
 WantedBy=default.target

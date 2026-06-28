@@ -8,8 +8,11 @@ Before=paperless.service
 ContainerName=paperless-db
 Pod=paperless.pod
 Image=docker.io/library/postgres:17-alpine
-EnvironmentFile=/srv/paperless/paperless.env
 Volume=/srv/paperless/db:/var/lib/postgresql/data:z
+Envvironment=POSTGRES_USER=paperless
+Environment=POSTGRES_DBNAME=paperless
+Environment=POSTGRES_HOSTNAME=paperless
+Secret=paperless-db-password,type=env,target=POSTGRES_PASSWORD
 
 HealthCmd=pg_isready -U postgres || exit 1
 HealthInterval=15s
@@ -19,7 +22,7 @@ HealthStartPeriod=30s
 
  
 [Service]
-Restart=on-failure
+Restart=always
 TimeoutStartSec=900
 
 [Install]

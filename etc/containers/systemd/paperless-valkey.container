@@ -5,11 +5,11 @@ After=paperless-pod.service
 
 [Container]
 ContainerName=paperless-valkey
-Image=docker.io/valkey/valkey:8-alpine
-Volume=/mnt/paperless/valkey:/data:rw,z
+Image=docker.io/valkey/valkey:9-alpine
+Exec=valkey-server --maxmemory-policy noeviction --protected-mode no ## Needed due to updgrade to Valkey 9
+Volume=/mnt/paperless/cache:/data:rw,z
 AutoUpdate=registry
 Pod=paperless.pod
-EnvironmentFile=/srv/paperless/paperless.env
 
 HealthCmd=valkey-cli ping | grep -q PONG || exit 1
 HealthInterval=10s
@@ -18,8 +18,7 @@ HealthRetries=3
 HealthStartPeriod=10s
 
 [Service]
-Restart=on-failure
-TimeoutStartSec=900
+Restart=always
 
 [Install]
 WantedBy=default.target
