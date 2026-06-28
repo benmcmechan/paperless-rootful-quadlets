@@ -6,7 +6,7 @@ After=paperless-pod.service
 [Container]
 ContainerName=paperless-valkey
 Image=docker.io/valkey/valkey:9-alpine
-Exec=valkey-server --maxmemory-policy noeviction --protected-mode no ## Needed due to updgrade to Valkey 9
+Exec=valkey-server --maxmemory-policy noeviction --protected-mode no
 Volume=/mnt/paperless/cache:/data:rw,z
 AutoUpdate=registry
 Pod=paperless.pod
